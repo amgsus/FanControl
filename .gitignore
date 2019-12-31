@@ -1,0 +1,5 @@
+Debug/
+FanControl_Programmer/
+Release/
+!Debug/FanControl.map
+!Debug/FanControl.s19

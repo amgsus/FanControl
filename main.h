@@ -20,6 +20,10 @@
 
 // ----------------------------------------------------------------------------
 
+#define F_MASTER        16000000UL  /* Hz */
+#define F_PWM_DEFAULT   15000U      /* Hz */
+#define F_TIM2          F_MASTER
+
 BOOL SetTask(WORD value);
 
 BOOLEAN
@@ -36,6 +40,15 @@ ValidateParameterValue(GASIFSREG reg, GASIFSVAL val);
             GPIO_Write(p_LED, OD_LOW); \
         } \
     } while (0)
+
+WORD
+SetDutyCycle(WORD value);
+
+#define MIN_PWM_FREQUENCY 1000U     /*   1 kHz */
+#define MAX_PWM_FREQUENCY 100000U   /* 100 kHz */
+
+DWORD
+SetupPWM(DWORD freq, WORD dutyCycle);
 
 // ----------------------------------------------------------------- Gasifs ---
 

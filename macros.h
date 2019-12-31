@@ -7,6 +7,8 @@
 #  define BIT(n) (1U << (n))
 #endif
 
+#define BIN(seq) (0b##seq##U)
+
 #ifndef BCLR
 #  define BCLR(value, bit) (value &= ~BIT(bit))
 #endif
@@ -27,5 +29,8 @@
             *(ptr) = (value); \
         } \
     } while (0)
+
+#define LOBYTE(word) ((BYTE)((word)))
+#define HIBYTE(word) ((BYTE)((WORD)(word) >> 8U))
 
 # endif // ------------------------------------------- End of Include Guard ---

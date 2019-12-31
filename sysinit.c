@@ -1,7 +1,6 @@
 #include "main.h"
 #include "gpio.h"
 
-#define F_MASTER            ( 16000000 )    /* Hz */
 #define SERIAL_BAUDRATE     ( 9600 )        /* bauds */
 
 #define _UART_DIV     \
@@ -14,6 +13,8 @@
 void
 SystemInit(void)
 {
+    WORD  u16;
+
     // System clock.
 
     CLK_CCOR    = 0x00; // Clock output disabled.
@@ -30,7 +31,7 @@ SystemInit(void)
 
     // GPIO.
 
-    GPIO_Setup(p_PWM,      GPIO_OUT_PP_HIGH_FAST);
+    GPIO_Setup(p_PWM,      GPIO_OUT_PP_LOW_FAST);
     GPIO_Setup(p_TACHO,    GPIO_IN_PU_NO_IT);
     GPIO_Setup(p_RS485_DE, GPIO_OUT_PP_LOW_FAST);
     GPIO_Setup(p_TX,       GPIO_OUT_PP_HIGH_FAST);
@@ -58,4 +59,33 @@ SystemInit(void)
     UART1_GTR   = 0x00; // Smartcard mode not used.
     UART1_PSCR  = 0x00; // Smartcard and IrDA modes not used.
     UART1_CR2   = 0x0C; // Enable TX/RX. All UART interupts disabled.
+
+    // PWM.
+
+    u16 = F_MASTER / F_PWM_DEFAULT;
+
+    TIM2_CR1    = 0x00;             // Stop.
+    TIM2_PSCR   = 0;                // No prescaler.
+    TIM2_IER    = 0;                // Disable interrupts.
+    TIM2_EGR    = 0x00;             // Disable events.
+    TIM2_ARRH   = HIBYTE(u16);      // Set auto-reload value (PWM frequency).
+    TIM2_ARRL   = LOBYTE(u16);
+    TIM2_CCR1H  = 0;                // Reset OCC1 counter.
+    TIM2_CCR1L  = 0;
+    TIM2_CCMR1  = 0;                // No output.
+    TIM2_CCR2H  = 0;                // Reset OCC2 counter.
+    TIM2_CCR2L  = 0;
+    TIM2_CCMR2  = 0;                // No output.
+    TIM2_CCMR3  = BIN(110) << 4U;   // CC3 is OUTPUT. Edge-aligned PWM (mode 1). CCR1x preload.
+    TIM2_CCR3H  = 0;                // Reset OCC3 counter.
+    TIM2_CCR3L  = 0;
+    TIM2_CCER1  = 0;                // Disable both CC1 & CC2.
+    TIM2_CCER2  = 0x01;             // Enable OC3. Set OC3 active high.
+    TIM2_CNTRH  = 0;                // Reset counter.
+    TIM2_CNTRL  = 0;
+    TIM2_CR1   |= 0x01;             // Enable.
+
+    // Input Capture Timer.
 }
+
+

@@ -9,22 +9,25 @@
 // ---------------------------------- Diagnostic Report Registers 0x00-0x0F ---
 
 /* Num of diagnostic registers (1 <= N <= 16) */
-#define NUM_DIAG    1
+#define NUM_DIAG    2
 
 #define DIAG_BASE_OFFSET 0x00
 #define DIAG_MAX         0x0F
 
 #define REG_REP_PWM   ( DIAG_BASE_OFFSET + 0x00 ) /* PWM */
+#define REG_REP_RPM   ( DIAG_BASE_OFFSET + 0x01 ) /* RPM */
 
 // ---------------------------------------------- Param Registers 0x10-0xEF ---
 
 /* Num of parameters (1 <= N <= 224) */
-#define NUM_PARM    1
+#define NUM_PARM    3
 
 #define PARM_BASE_OFFSET 0x10
 #define PARM_MAX         0xE0
 
 #define REG_PAR_BUID  ( PARM_BASE_OFFSET + 0x00 ) /* Device BUID */
+#define REG_PAR_DFLT  ( PARM_BASE_OFFSET + 0x01 ) /* Sets duty cycle on device startup */
+#define REG_PAR_FREQ  ( PARM_BASE_OFFSET + 0x02 ) /* PWM frequency (kHz*10) */
 
 // ------------------------------ Information / Control Registers 0xF0-0xFF ---
 
@@ -49,6 +52,10 @@
 #define REGISTER_COUNT_ENCODED ( ((NUM_INFO & 0x0F) << 12) | ((NUM_INFO & 0x0F) << 8) | (NUM_INFO & 0x0F) | NUM_PARM )
 
 extern GASIFSVAL g_GasifsVars[]; // Defined in 'gasifs_hdls.c'
+extern BOOLEAN   g_ParamsUpdateEvent;
+extern WORD      g_ParamKey;
+extern BOOLEAN   g_ResetRequested;
+extern WORD      g_LastParamChanged;
 
 #define GASIFSVAR(index) (g_GasifsVars[(index)])
 #define SET_GASIFSVAR(index, value) do { g_GasifsVars[(index)] = (GASIFSVAL)(value); } while (0)

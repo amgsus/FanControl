@@ -11,6 +11,7 @@ GASIFSVAL g_GasifsVars[NUM_DIAG + NUM_INFO + NUM_PARM];
 BOOLEAN   g_ParamsUpdateEvent = FALSE;
 WORD      g_ParamKey          = 0;
 BOOLEAN   g_ResetRequested    = FALSE;
+WORD      g_LastParamChanged  = 0; // 0 - undetermined.
 
 // ----------------------------------------------------------------------------
 
@@ -22,9 +23,9 @@ GasifsHCMD(GASIFSCMD cmd)
     BOOL        ack = TRUE;
 
     switch (cmd) {
-        case 0x8000: // Device off.
+        case 0x8000: // TODO: Device off. Note: not all fans can be stopped fully.
             break;
-        case 0x8001: // Device on.
+        case 0x8001: // TODO: Device on.
             break;
         case 0xFFF0: // Poll diagnostic registers.
             break;
@@ -85,6 +86,8 @@ GasifsWREG(GASIFSREG reg, GASIFSVAL val)
 {
     GASIFSACK ack;
 
+    g_LastParamChanged = 0;
+
     if (reg <= 0x0F) {
         goto writeForbidden;
     } else if (reg >= 0xF0) {
@@ -103,6 +106,7 @@ GasifsWREG(GASIFSREG reg, GASIFSVAL val)
         }
         if (ValidateParameterValue(reg, val)) {
             SET_GASIFSVAR_PARM(reg, val);
+            g_LastParamChanged = reg;
             g_ParamsUpdateEvent = TRUE;
         }
         ack.regRW.val = GASIFSVAR_PARM(reg);
@@ -125,6 +129,8 @@ ValidateParameterValue(GASIFSREG reg, GASIFSVAL val)
     switch (reg) {
         case REG_PAR_BUID:
             return (val >= 'G' && val <= 'Z');
+        case REG_PAR_FREQ:
+            return (val >= (MIN_PWM_FREQUENCY / 100U) && val <= (MAX_PWM_FREQUENCY / 100U));
         default:
             return (FALSE);
     }
