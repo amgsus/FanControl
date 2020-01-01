@@ -2,6 +2,7 @@
 #include "gpio.h"
 #include "gasifs_vars.h"
 #include "led.h"
+#include "asm.h"
 
 extern void SystemInit(void);
 
@@ -9,8 +10,20 @@ extern void SystemInit(void);
 #define TIM4UIF (TIM4_SR & UIF_flag)
 #define RESET_TIM4UIF() do { TIM4_SR &= ~UIF_flag; } while (0)
 
+PRIVATE volatile WORD g_LastTachoCapturedValue = 0;
+
+PRIVATE
+WORD
+ReadTachoCaptureSafe(void);
+
+PRIVATE
+void
+CalculateRPM(void);
+
 int main()
 {
+    UINT8 cnt = 0;
+
     SystemInit();
 
     LED_Init();
@@ -28,10 +41,17 @@ int main()
 
     SetupPWM(GASIFSVAR_PARM(REG_PAR_FREQ) * 100U, GASIFSVAR_PARM(REG_PAR_DFLT)); // Startup defaults.
 
+    UnmaskInterrupts();
+
     for (;;) {
         if (TIM4UIF) {
             RESET_TIM4UIF();
             LED_Task();
+            cnt++;
+            if (cnt == 100) {
+                cnt = 0;
+                CalculateRPM();
+            }
         }
 
         if (GasifsIOTransportTask(0)) {
@@ -52,6 +72,8 @@ int main()
     }
 }
 
+// ----------------------------------------------------------------------------
+
 BOOL
 SetTask(WORD value)
 {
@@ -59,6 +81,8 @@ SetTask(WORD value)
     SET_GASIFSVAR_DIAG(REG_REP_PWM, pwm);
     return 1;
 }
+
+// ----------------------------------------------------------------------------
 
 CHAR
 GetDeviceBUID(void)
@@ -72,8 +96,7 @@ RS485_ToggleTransmitter(BOOL enabled)
     GPIO_Write(p_RS485_DE, enabled ? PP_HIGH : PP_LOW);
 }
 
-
-
+// ----------------------------------------------------------------------------
 
 #define TIM2_CR1_CEN BIT(0)
 
@@ -138,4 +161,68 @@ SetDutyCycle(WORD value) // Precision: 0.1%.
     TIM2_CCR3H = HIBYTE(u32);
     TIM2_CCR3L = LOBYTE(u32);
     return value;
+}
+
+// ----------------------------------------------------------------------------
+
+#define TACHO_AVG_COUNT 8
+
+ISR(TIM1_CAPCOM_IRQHandler) {
+
+    WORD deltaTicks;
+    WORD tickNow;
+
+    static WORD   accum[TACHO_AVG_COUNT];
+    static UINT32 sum    = 0;
+    static BYTE   tail   = 0;
+    static BYTE   head   = 0;
+    static BYTE   count  = 0;
+    static WORD   last   = 0;
+
+    TIM1_SR2 &= ~BIT(3); // Clear CC3OF (overcapture).
+    tickNow = (WORD)(TIM1_CCR3H << 8) | TIM1_CCR3L; // Clears CC3IE by reading CCR3L.
+
+    deltaTicks = tickNow - last;
+    last = tickNow;
+
+    sum += deltaTicks; // Accum avg.
+
+    accum[head] = deltaTicks;
+    head = (head + 1) & (TACHO_AVG_COUNT - 1);
+    count++;
+
+    if (count >= TACHO_AVG_COUNT) {
+        sum -= accum[tail];
+        tail = (tail + 1) & (TACHO_AVG_COUNT - 1);
+        count--;
+    }
+
+    g_LastTachoCapturedValue = sum / count;
+}
+
+PRIVATE
+WORD
+ReadTachoCaptureSafe(void)
+{
+    volatile WORD n;
+    do {
+        n = g_LastTachoCapturedValue;
+    } while (n != g_LastTachoCapturedValue);
+    return n;
+}
+
+PRIVATE
+void
+CalculateRPM(void)
+{
+    WORD n;
+    UINT32 accum;
+    n = ReadTachoCaptureSafe();
+    accum = n * 50UL;
+    accum /= 100; // .1 ms
+    SET_GASIFSVAR_DIAG(REG_REP_PER, (GASIFSOLD) accum);
+    n = 10000U / (WORD) accum;
+    n *= 60;
+    n >>= 1; // 2 pulses per rotation.
+    SET_GASIFSVAR_DIAG(REG_REP_RPM, (GASIFSOLD) n);
 }

@@ -10,10 +10,12 @@
 #define _PRECALC_BRR1 \
     ((BYTE) ((((_UART_DIV) & 0x0FF0) >> 4)))
 
+#define TIM1_PRESCALER (WORD)(801) /* 16MHz / 20000 = 800 (50 us) */
+
 void
 SystemInit(void)
 {
-    WORD  u16;
+    WORD u16;
 
     // System clock.
 
@@ -64,28 +66,57 @@ SystemInit(void)
 
     u16 = F_MASTER / F_PWM_DEFAULT;
 
-    TIM2_CR1    = 0x00;             // Stop.
+    TIM2_CR1    = 0;                // Stop.
+    TIM2_SR1    = 0;                // Clear all flags.
+    TIM1_SR2    = 0;
     TIM2_PSCR   = 0;                // No prescaler.
+    TIM2_CNTRH  = 0;                // Reset counter.
+    TIM2_CNTRL  = 0;
     TIM2_IER    = 0;                // Disable interrupts.
     TIM2_EGR    = 0x00;             // Disable events.
     TIM2_ARRH   = HIBYTE(u16);      // Set auto-reload value (PWM frequency).
     TIM2_ARRL   = LOBYTE(u16);
-    TIM2_CCR1H  = 0;                // Reset OCC1 counter.
+    TIM2_CCR1H  = 0;                // Reset CC1 counter.
     TIM2_CCR1L  = 0;
-    TIM2_CCMR1  = 0;                // No output.
-    TIM2_CCR2H  = 0;                // Reset OCC2 counter.
+    TIM2_CCMR1  = 0;                // Not using CC1.
+    TIM2_CCR2H  = 0;                // Reset CC2 counter.
     TIM2_CCR2L  = 0;
-    TIM2_CCMR2  = 0;                // No output.
+    TIM2_CCMR2  = 0;                // Not using CC2.
     TIM2_CCMR3  = BIN(110) << 4U;   // CC3 is OUTPUT. Edge-aligned PWM (mode 1). CCR1x preload.
-    TIM2_CCR3H  = 0;                // Reset OCC3 counter.
+    TIM2_CCR3H  = 0;                // Reset CC3 counter.
     TIM2_CCR3L  = 0;
-    TIM2_CCER1  = 0;                // Disable both CC1 & CC2.
-    TIM2_CCER2  = 0x01;             // Enable OC3. Set OC3 active high.
-    TIM2_CNTRH  = 0;                // Reset counter.
-    TIM2_CNTRL  = 0;
+    TIM2_CCER1  = 0;                // Disable CC1 & CC2.
+    TIM2_CCER2  = 0x01;             // Enable CC3. Set CC3 output active high.
     TIM2_CR1   |= 0x01;             // Enable.
 
     // Input Capture Timer.
+
+    TIM1_CR1    = 0;                // Stop.
+    TIM1_SR1    = 0;                // Clear all flags.
+    TIM1_SR2    = 0;
+    TIM1_PSCRH  = HIBYTE(TIM1_PRESCALER);
+    TIM1_PSCRL  = LOBYTE(TIM1_PRESCALER);
+    TIM1_CNTRH  = 0;                // Reset counter.
+    TIM1_CNTRL  = 0;
+    TIM1_EGR    = BIT(3);           // Enable CC3 event generation.
+    TIM1_IER    = BIT(3);           // Unmask CC3 interrupt.
+    TIM1_ARRH   = 0xFF;             // Set auto-reload value to MAX.
+    TIM1_ARRL   = 0xFF;
+    TIM1_ETR    = 0;                // Not using external trigger.
+    TIM1_SMCR   = 0;                // Not using slave mode control.
+    TIM1_CCR1H  = 0;                // Reset CC1 counter.
+    TIM1_CCR1L  = 0;
+    TIM1_CCMR1  = 0;                // Not using CC1.
+    TIM1_CCR2H  = 0;                // Reset CC2 counter.
+    TIM1_CCR2L  = 0;
+    TIM1_CCMR2  = 0;                // Not using CC2.
+    TIM1_CCR3H  = 0;                // Reset CC3 counter.
+    TIM1_CCR3L  = 0;
+    TIM1_CCMR3  = (BIN(1111) << 4) | BIN(01); // CC3 is INPUT (IC3->TI3FP). No prescaler. Filter: F_SAMPLING=F_MASTER/32, N=8 (62500/2 kHz).
+    TIM1_CCR4H  = 0;                // Reset CC4 counter.
+    TIM1_CCR4L  = 0;
+    TIM1_CCMR4  = 0;                // Not using CC4.
+    TIM1_CCER1  = 0;                // Disable CC1 & CC2.
+    TIM1_CCER2  = BIT(0);           // Enable CC3. Capture on rising edge. // TODO: Which of edges is better to capture?
+    TIM1_CR1   |= 0x01;             // Enable.
 }
-
-

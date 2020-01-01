@@ -18,6 +18,8 @@ ISR(NonHandledInterrupt) {
     while (1); // ToDo: In order to detected unexpected interrupts put a breakpoint here.
 }
 
+DECLARE_ISR(TIM1_CAPCOM_IRQHandler);
+
 // Interrupt Vector Table //
 
 #define OPCODE 0x82 /* See PM0044 sheet */
@@ -37,7 +39,7 @@ InterruptTableEntry_t const _vectab[] = {
     {OPCODE, NonHandledInterrupt}, /* IRQ9  */
     {OPCODE, NonHandledInterrupt}, /* IRQ10 : SPI */
     {OPCODE, NonHandledInterrupt}, /* IRQ11 : TIM1 Update/OVF/UVF/Break */
-    {OPCODE, NonHandledInterrupt}, /* IRQ12 : TIM1 CAPCOM */
+    {OPCODE, TIM1_CAPCOM_IRQHandler}, /* IRQ12 : TIM1 CAPCOM */
     {OPCODE, NonHandledInterrupt}, /* IRQ13 : TIM2 Update/OVF */
     {OPCODE, NonHandledInterrupt}, /* IRQ14 : TIM2 CAPCOM */
     {OPCODE, NonHandledInterrupt}, /* IRQ15 */

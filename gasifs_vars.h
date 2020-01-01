@@ -9,13 +9,14 @@
 // ---------------------------------- Diagnostic Report Registers 0x00-0x0F ---
 
 /* Num of diagnostic registers (1 <= N <= 16) */
-#define NUM_DIAG    2
+#define NUM_DIAG    3
 
 #define DIAG_BASE_OFFSET 0x00
 #define DIAG_MAX         0x0F
 
 #define REG_REP_PWM   ( DIAG_BASE_OFFSET + 0x00 ) /* PWM */
 #define REG_REP_RPM   ( DIAG_BASE_OFFSET + 0x01 ) /* RPM */
+#define REG_REP_PER   ( DIAG_BASE_OFFSET + 0x02 ) /* Period */
 
 // ---------------------------------------------- Param Registers 0x10-0xEF ---
 
