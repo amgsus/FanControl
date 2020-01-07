@@ -20,7 +20,7 @@
 #define p_PWM       PA3
 #define p_LED       PB5
 #define p_TACHO     PC3
-#define p_VIN       PD3
+#define p_VIN       PD2
 #define p_RS485_DE  PD4
 #define p_TX        PD5
 #define p_RX        PD6

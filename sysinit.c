@@ -119,5 +119,12 @@ SystemInit(void)
     TIM1_CCER2  = BIT(0);           // Enable CC3. Capture on rising edge. // TODO: Which of edges is better to capture?
     TIM1_CR1   |= 0x01;             // Enable.
 
-    // TODO: Configure ADC.
+    // ADC
+
+    ADC_CR1     = 0;                // Shutdown ADC. Single conversion mode.
+    ADC_CR2     = BIT(3);           // Right-alignment result. EXTTRIG disabled.
+    ADC_CR3     = 0;                // No data buffering (DBUF).
+    ADC_CSR     = 0x03;             // Select AIN3 (PD2). Interrupts and analog watchdog disabled.
+    ADC_CR1    |= BIT(0);           // Enable ADC.
+    ADC_CR1    |= BIT(0);           // Start conversion now.
 }

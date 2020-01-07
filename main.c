@@ -20,7 +20,8 @@ extern void SystemInit(void);
 #define TIM4UIF (TIM4_SR & UIF_flag)
 #define RESET_TIM4UIF() do { TIM4_SR &= ~UIF_flag; } while (0)
 
-PRIVATE volatile WORD g_LastTachoCapturedValue = 0;
+PRIVATE volatile WORD g_LastTachoCapturedValue = 0; // RPM
+PRIVATE volatile WORD g_DCINRawValue = 0; // ADC value
 
 PRIVATE
 WORD
@@ -45,7 +46,16 @@ CheckGasifsResetRequest(void);
 PRIVATE void
 IncrementGasifsCounter(void);
 
+PRIVATE
+void
+ADCTask(void);
+
+PRIVATE void
+CalculateDCINVoltage(void);
+
 // ----------------------------------------------------------------------------
+
+// TODO: Implement working mode (REG_PAR_MODE).
 
 int main()
 {
@@ -61,8 +71,10 @@ int main()
     SetInfoRegisters(RST_SR);
     LoadParameters();
 
-    SET_GASIFSVAR_DIAG(REG_REP_PWM, 0);
-    SET_GASIFSVAR_DIAG(REG_REP_RPM, 0);
+    SET_GASIFSVAR_DIAG(REG_REP_PWM , 0);
+    SET_GASIFSVAR_DIAG(REG_REP_RPM , 0);
+    SET_GASIFSVAR_DIAG(REG_REP_PER , 0);
+    SET_GASIFSVAR_DIAG(REG_REP_DCIN, 0);
 
     SetupPWM(GASIFSVAR_PARM(REG_PAR_FREQ) * 100U, GASIFSVAR_PARM(REG_PAR_DUTY)); // Startup defaults.
 
@@ -83,9 +95,14 @@ int main()
             RESET_TIM4UIF();
             LED_Task();
             cnt++;
-            if (cnt == 500) {
-                cnt = 0;
+            if (cnt % 50 == 0) { // 50 ms.
+                ADCTask();
+            }
+            if (cnt == 250) {
                 CalculateRPM();
+            } else if (cnt == 500) {
+                cnt = 0;
+                CalculateDCINVoltage();
             }
             IncrementGasifsCounter();
         }
@@ -95,6 +112,8 @@ int main()
 }
 
 // ----------------------------------------------------------------------------
+
+
 
 PRIVATE void
 IncrementGasifsCounter(void)
@@ -239,9 +258,9 @@ SetDutyCycle(WORD value) // Precision: 0.1%.
     return value;
 }
 
-// ----------------------------------------------------------------------------
+// -------------------------------------------------------------- Tachometer ---
 
-#define TACHO_AVG_COUNT 8
+#define TACHO_AVG_COUNT 8 /* 2^x */
 
 ISR(TIM1_CAPCOM_IRQHandler) {
 
@@ -303,4 +322,52 @@ CalculateRPM(void)
         n /= GASIFSVAR_PARM(REG_PAR_TDIV);
     }
     SET_GASIFSVAR_DIAG(REG_REP_RPM, (GASIFSOLD) n);
+}
+
+// ----------------------------------------------- DC IN Voltage Measurement ---
+
+#define ADC_FILTER_LENGTH 8 /* 2^x */
+
+PRIVATE
+void
+ADCTask(void)
+{
+    static WORD   accum[ADC_FILTER_LENGTH];
+    static UINT32 sum    = 0;
+    static BYTE   tail   = 0;
+    static BYTE   head   = 0;
+    static BYTE   count  = 0;
+
+    WORD adcValue;
+
+    if (ADC_CSR & BIT(7)) { // EOC.
+        adcValue  = ADC_DRL;
+        adcValue |= ADC_DRH << 8;
+
+        sum += adcValue; // Averaging.
+
+        accum[head] = adcValue;
+        head = (head + 1) & (ADC_FILTER_LENGTH - 1);
+        count++;
+
+        if (count >= ADC_FILTER_LENGTH) {
+            sum -= accum[tail];
+            tail = (tail + 1) & (ADC_FILTER_LENGTH - 1);
+            count--;
+        }
+
+        g_DCINRawValue = sum / count;
+
+        ADC_CSR &= ~BIT(7);
+        ADC_CR1 |=  BIT(0); // Start next conversion.
+    }
+}
+
+PRIVATE void
+CalculateDCINVoltage(void)
+{
+    UINT32 n = (UINT32) g_DCINRawValue * GASIFSVAR_PARM(REG_PAR_VSCL);
+    n /= 1000UL;
+    n += (SINT16) GASIFSVAR_PARM(REG_PAR_VOFS); // Cast to signed.
+    SET_GASIFSVAR_DIAG(REG_REP_DCIN, (UINT16) n); // Potential data lost.
 }

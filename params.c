@@ -49,9 +49,9 @@ LoadDefaultParameters(void)
     SET_GASIFSVAR_PARM(REG_PAR_FREQ, 150);          // 15.0 kHz
     SET_GASIFSVAR_PARM(REG_PAR_TDIV, RPM_PRSC_2);   // 2
     SET_GASIFSVAR_PARM(REG_PAR_MODE, PAR_MODE_OFF); // OFF
-    SET_GASIFSVAR_PARM(REG_PAR_XXX1, 0);            // Keep 0 for reserved.
-    SET_GASIFSVAR_PARM(REG_PAR_XXX2, 0);            // Keep 0 for reserved.
-    SET_GASIFSVAR_PARM(REG_PAR_XXX3, 0);            // Keep 0 for reserved.
+    SET_GASIFSVAR_PARM(REG_PAR_VSCL, 303);          // 0.303 (39K:7K5) => (X * 0.1) V
+    SET_GASIFSVAR_PARM(REG_PAR_VOFS, 0);            // 0
+    SET_GASIFSVAR_PARM(REG_PAR_XXXX, 0);            // Keep 0 for reserved.
 }
 
 BOOL
@@ -87,9 +87,7 @@ SaveParameters(void)
     BYTE  diffs;
 
     // Force all reserved parameters to zero value.
-    SET_GASIFSVAR_PARM(REG_PAR_XXX1, 0);
-    SET_GASIFSVAR_PARM(REG_PAR_XXX2, 0);
-    SET_GASIFSVAR_PARM(REG_PAR_XXX3, 0);
+    SET_GASIFSVAR_PARM(REG_PAR_XXXX, 0);
 
     // Look for any changes comparing to the current data stored.
     if (p_LastStoredRecordIndex != NO_RECORD_FOUND) {

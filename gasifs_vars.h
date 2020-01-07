@@ -15,7 +15,7 @@
 // ---------------------------------- Diagnostic Report Registers 0x00-0x0F ---
 
 /* Num of diagnostic registers (1 <= N <= 16) */
-#define NUM_DIAG  3
+#define NUM_DIAG  4
 
 #define DIAG_BASE_OFFSET 0x00
 #define DIAG_MAX         0x0F
@@ -23,6 +23,7 @@
 #define REG_REP_PWM   ( DIAG_BASE_OFFSET + 0x00 ) /* PWM */
 #define REG_REP_RPM   ( DIAG_BASE_OFFSET + 0x01 ) /* RPM */
 #define REG_REP_PER   ( DIAG_BASE_OFFSET + 0x02 ) /* Period */
+#define REG_REP_DCIN  ( DIAG_BASE_OFFSET + 0x03 ) /* DC IN voltage (mV) */
 
 // ---------------------------------------------- Param Registers 0x10-0xEF ---
 
@@ -32,19 +33,19 @@
 /**
  * Number of non-volatile parameters (1 <= N <= 224)
  */
-#define NUM_PARM  8
+#define NUM_PARM  8     /* See also MAX_STORED_PARAMETERS */
 
 #define REG_PAR_BUID  ( PARM_BASE_OFFSET + 0x00 ) /* Device BUID */
 #define REG_PAR_DUTY  ( PARM_BASE_OFFSET + 0x01 ) /* Sets duty cycle on device startup (.1%) */
 #define REG_PAR_FREQ  ( PARM_BASE_OFFSET + 0x02 ) /* PWM frequency (.1kHz) */
 #define REG_PAR_MODE  ( PARM_BASE_OFFSET + 0x03 ) /* Working mode */
 #define REG_PAR_TDIV  ( PARM_BASE_OFFSET + 0x04 ) /* Tachometer pulse divider */
+#define REG_PAR_VSCL  ( PARM_BASE_OFFSET + 0x05 ) /* DC IN scale (.01) */
+#define REG_PAR_VOFS  ( PARM_BASE_OFFSET + 0x06 ) /* DC IN offset */
 
 // Reserved for future use:
 
-#define REG_PAR_XXX1  ( PARM_BASE_OFFSET + 0x05 ) /* Reserved */
-#define REG_PAR_XXX2  ( PARM_BASE_OFFSET + 0x06 ) /* Reserved */
-#define REG_PAR_XXX3  ( PARM_BASE_OFFSET + 0x07 ) /* Reserved */
+#define REG_PAR_XXXX  ( PARM_BASE_OFFSET + 0x07 ) /* Reserved */
 
 // ------------------------------ Information / Control Registers 0xF0-0xFF ---
 
