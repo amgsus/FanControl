@@ -1,8 +1,18 @@
+/*
+ * STM8S103F3 Single Fan Controller with Gasifs interface.
+ *
+ * By:              A.G.
+ * Created:         2019.12.31
+ * Last modified:   2020.01.01
+ */
+
 #include "main.h"
 #include "gpio.h"
 #include "gasifs_vars.h"
 #include "led.h"
 #include "asm.h"
+#include "params.h"
+#include "watchdog.h"
 
 extern void SystemInit(void);
 
@@ -20,9 +30,26 @@ PRIVATE
 void
 CalculateRPM(void);
 
+PRIVATE
+void
+CheckGasifsParametersUpdateEvent(void);
+
+PRIVATE
+void
+CheckGasifsKey(void);
+
+PRIVATE
+void
+CheckGasifsResetRequest(void);
+
+PRIVATE void
+IncrementGasifsCounter(void);
+
+// ----------------------------------------------------------------------------
+
 int main()
 {
-    UINT8 cnt = 0;
+    WORD cnt = 0;
 
     SystemInit();
 
@@ -31,48 +58,52 @@ int main()
     LED_SetState(LED_SLOW_BLINK, LED_NO_TIMEOUT);
 
     GasifsInit();
+    SetInfoRegisters(RST_SR);
+    LoadParameters();
 
-    SET_GASIFSVAR_DIAG(REG_REP_PWM , 0);
-    SET_GASIFSVAR_DIAG(REG_REP_RPM , 0);
+    SET_GASIFSVAR_DIAG(REG_REP_PWM, 0);
+    SET_GASIFSVAR_DIAG(REG_REP_RPM, 0);
 
-    SET_GASIFSVAR_PARM(REG_PAR_BUID, 'N');
-    SET_GASIFSVAR_PARM(REG_PAR_DFLT, 500); // 50.0%
-    SET_GASIFSVAR_PARM(REG_PAR_FREQ, 150); // 15.0 kHz
-
-    SetupPWM(GASIFSVAR_PARM(REG_PAR_FREQ) * 100U, GASIFSVAR_PARM(REG_PAR_DFLT)); // Startup defaults.
+    SetupPWM(GASIFSVAR_PARM(REG_PAR_FREQ) * 100U, GASIFSVAR_PARM(REG_PAR_DUTY)); // Startup defaults.
 
     UnmaskInterrupts();
 
-    for (;;) {
+    for (;;)
+    {
+        if (GasifsIOTransportTask(0)) {
+            if (GasifsProcess()) {
+                CheckGasifsResetRequest();
+                CheckGasifsParametersUpdateEvent();
+                CheckGasifsKey();
+                REPORT_USART_COMM_OK();
+            }
+        }
+
         if (TIM4UIF) {
             RESET_TIM4UIF();
             LED_Task();
             cnt++;
-            if (cnt == 100) {
+            if (cnt == 500) {
                 cnt = 0;
                 CalculateRPM();
             }
+            IncrementGasifsCounter();
         }
 
-        if (GasifsIOTransportTask(0)) {
-            if (GasifsProcess()) {
-                REPORT_USART_COMM_OK();
-                if (g_ParamsUpdateEvent) {
-                    g_ParamsUpdateEvent = FALSE;
-                    if (g_LastParamChanged == REG_PAR_FREQ) {
-                        DWORD freq;
-                        DWORD freqSet;
-                        freq = GASIFSVAR_PARM(REG_PAR_FREQ) * 100UL;
-                        freqSet = SetupPWM(freq, GASIFSVAR_DIAG(REG_REP_PWM));
-                        SET_GASIFSVAR_PARM(REG_PAR_FREQ, freqSet);
-                    }
-                }
-            }
-        }
+        GPIO_Toggle(p_DEBUG);
     }
 }
 
 // ----------------------------------------------------------------------------
+
+PRIVATE void
+IncrementGasifsCounter(void)
+{
+    SET_GASIFSVAR_INFO(REG_NFO_TICK, GASIFSVAR_INFO(REG_NFO_TICK) + 1);
+    if (GASIFSVAR_INFO(REG_NFO_TICK) >= 60000) { // Overflows in 1 minute.
+        SET_GASIFSVAR_INFO(REG_NFO_TICK, 0);
+    }
+}
 
 BOOL
 SetTask(WORD value)
@@ -80,6 +111,51 @@ SetTask(WORD value)
     WORD pwm = SetDutyCycle(value);
     SET_GASIFSVAR_DIAG(REG_REP_PWM, pwm);
     return 1;
+}
+
+PRIVATE
+void
+CheckGasifsParametersUpdateEvent(void)
+{
+    if (g_ParamsUpdateEvent) {
+        g_ParamsUpdateEvent = FALSE;
+        if (g_LastParamChanged == REG_PAR_FREQ) {
+            DWORD freq;
+            DWORD freqSet;
+            freq = GASIFSVAR_PARM(REG_PAR_FREQ) * 100U; // SetupPWM() expects f in Hz (here 0.1 kHz).
+            freqSet = SetupPWM(freq, GASIFSVAR_DIAG(REG_REP_PWM));
+            SET_GASIFSVAR_PARM(REG_PAR_FREQ, freqSet);
+        }
+    }
+}
+
+PRIVATE
+void
+CheckGasifsKey(void)
+{
+    switch (g_ParamKey) {
+        case KEY_RESTORE_DEFAULT_PARAMETERS:
+            LoadDefaultParameters();
+            break;
+        case KEY_LOAD_STORED_PARAMETERS:
+            LoadParameters();
+            break;
+        case KEY_STORE_PARAMETERS:
+            SaveParameters();
+            break;
+    }
+    g_ParamKey = 0;
+}
+
+PRIVATE
+void
+CheckGasifsResetRequest(void)
+{
+    if (g_ResetRequested) {
+        while (1) {
+            WWDG_CR &= ~BIT(6); // Clear WWDG's T6 bit to generate software reset.
+        }
+    }
 }
 
 // ----------------------------------------------------------------------------
@@ -222,7 +298,9 @@ CalculateRPM(void)
     accum /= 100; // .1 ms
     SET_GASIFSVAR_DIAG(REG_REP_PER, (GASIFSOLD) accum);
     n = 10000U / (WORD) accum;
-    n *= 60;
-    n >>= 1; // 2 pulses per rotation.
+    n *= 60; // Pulses scaled up to 1 minute.
+    if (GASIFSVAR_PARM(REG_PAR_TDIV) > 1) {
+        n /= GASIFSVAR_PARM(REG_PAR_TDIV);
+    }
     SET_GASIFSVAR_DIAG(REG_REP_RPM, (GASIFSOLD) n);
 }

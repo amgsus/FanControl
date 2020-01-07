@@ -129,8 +129,14 @@ ValidateParameterValue(GASIFSREG reg, GASIFSVAL val)
     switch (reg) {
         case REG_PAR_BUID:
             return (val >= 'G' && val <= 'Z');
+        case REG_PAR_DUTY:
+            return (val >= (MIN_DUTY_CYCLE) && val <= (MAX_DUTY_CYCLE));
         case REG_PAR_FREQ:
             return (val >= (MIN_PWM_FREQUENCY / 100U) && val <= (MAX_PWM_FREQUENCY / 100U));
+        case REG_PAR_MODE:
+            return (1);
+        case REG_PAR_TDIV:
+            return (val >= (1) && val <= (4));
         default:
             return (FALSE);
     }

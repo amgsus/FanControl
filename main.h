@@ -1,19 +1,26 @@
-#ifndef FANCONTROL_MAIN_H
-#define FANCONTROL_MAIN_H
+/*
+ * By:              A.G.
+ * Created:         2019.12.31
+ * Last modified:   2020.01.04
+ */
+
+#ifndef MAIN_H
+#define MAIN_H
 
 // ----------------------------------------------------------------------------
 
 #include "__TYPES.h"
-#include "cosmic.h"
-#include "iostm8s103.h"
+#include "mcu.h"
 #include "gasifs.h"
 #include "gpio.h"
 
 // ----------------------------------------------------------------- Pinout ---
 
+#define p_DEBUG     PA2
 #define p_PWM       PA3
 #define p_LED       PB5
 #define p_TACHO     PC3
+#define p_VIN       PD3
 #define p_RS485_DE  PD4
 #define p_TX        PD5
 #define p_RX        PD6
@@ -46,16 +53,13 @@ SetDutyCycle(WORD value);
 
 #define MIN_PWM_FREQUENCY 1000U     /*   1 kHz */
 #define MAX_PWM_FREQUENCY 100000U   /* 100 kHz */
+#define MIN_DUTY_CYCLE    0U        /*     0 % */
+#define MAX_DUTY_CYCLE    1000U     /* 100.0 % */
 
 DWORD
 SetupPWM(DWORD freq, WORD dutyCycle);
 
 // ----------------------------------------------------------------- Gasifs ---
-
-/* [D]p[M]b = 0x4450 */
-
-#define DEFAULT_BUID        'M'
-#define HARDWARE_TAG        ( ('D' << 8) + 'P' )
 
 /**
  * When this value is written to REG_NFO_HWID (0xF0) register the device will

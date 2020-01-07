@@ -73,4 +73,23 @@ typedef           VOID* PVOID;
 typedef           PVOID POINTER;
 typedef           PVOID PTR;
 
+// WinAPI-style long pointers:
+
+typedef       VOID* LPVOID;
+typedef       BYTE* LPBYTE;
+typedef       CHAR* LPCHAR;
+typedef       INT8* LPINT8;
+typedef      SINT8* LPSINT8;
+typedef      UINT8* LPUINT8;
+typedef       WORD* LPWORD;
+typedef      INT16* LPINT16;
+typedef     SINT16* LPSINT16;
+typedef     UINT16* LPUINT16;
+typedef      DWORD* LPDWORD;
+typedef   LONGWORD* LPLONGWORD;
+typedef      INT32* LPINT32;
+typedef     SINT32* LPSINT32;
+typedef     UINT32* LPUINT32;
+typedef const void* LPCVOID; // Cannot use 'typedef const LPVOID' here.
+
 # endif // ------------------------------------------- End of Include Guard ---

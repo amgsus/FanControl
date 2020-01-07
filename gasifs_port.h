@@ -13,8 +13,7 @@
 // HAL Macros //
 
 #include "__TYPES.h"
-#include "cosmic.h"
-#include "iostm8s103.h"
+#include "mcu.h"
 #include "hex.h"
 
 // ----------------------------------------------------------------------------
@@ -35,7 +34,7 @@ typedef WORD  GASIFSOLD;
 typedef BYTE  GASIFSREG;
 #define GASIFS_REG_SIZE  1  /*  8-bit */
 
-typedef DWORD GASIFSVAL;
+typedef WORD  GASIFSVAL;
 #define GASIFS_VAL_SIZE  2  /* 16-bit */
 
 // --------------------------------------------------- SERIAL COMMUNICATION ---

@@ -1,22 +1,21 @@
 #include "main.h"
 #include "gpio.h"
 
-#define SERIAL_BAUDRATE     ( 9600 )        /* bauds */
+#define  BAUDRATE 38400
 
 #define _UART_DIV     \
-    ((WORD) ((float)(F_MASTER) / (float)(SERIAL_BAUDRATE) + 0.5))
+    ((WORD) ((float)(F_MASTER) / (float)(BAUDRATE) + 0.5))
 #define _PRECALC_BRR2 \
     ((BYTE) ((((_UART_DIV) & 0xF000) >> 8) | ((_UART_DIV) & 0x000F)))
 #define _PRECALC_BRR1 \
     ((BYTE) ((((_UART_DIV) & 0x0FF0) >> 4)))
 
-#define TIM1_PRESCALER (WORD)(801) /* 16MHz / 20000 = 800 (50 us) */
+#define TIM1_PRESCALER ((WORD)(801)) /* 16MHz / 20000 = 800 (50 us) */
+#define TIM2_ARR_VALUE ((WORD)(F_MASTER / F_PWM_DEFAULT))
 
 void
 SystemInit(void)
 {
-    WORD u16;
-
     // System clock.
 
     CLK_CCOR    = 0x00; // Clock output disabled.
@@ -39,6 +38,8 @@ SystemInit(void)
     GPIO_Setup(p_TX,       GPIO_OUT_PP_HIGH_FAST);
     GPIO_Setup(p_RX,       GPIO_IN_PU_NO_IT);
     GPIO_Setup(p_LED,      GPIO_OUT_OD_HIZ_SLOW);
+    GPIO_Setup(p_DEBUG,    GPIO_OUT_PP_LOW_FAST);
+    GPIO_Setup(p_VIN,      GPIO_IN_FL_NO_IT);
 
     // Timebase.
 
@@ -64,8 +65,6 @@ SystemInit(void)
 
     // PWM.
 
-    u16 = F_MASTER / F_PWM_DEFAULT;
-
     TIM2_CR1    = 0;                // Stop.
     TIM2_SR1    = 0;                // Clear all flags.
     TIM1_SR2    = 0;
@@ -74,8 +73,8 @@ SystemInit(void)
     TIM2_CNTRL  = 0;
     TIM2_IER    = 0;                // Disable interrupts.
     TIM2_EGR    = 0x00;             // Disable events.
-    TIM2_ARRH   = HIBYTE(u16);      // Set auto-reload value (PWM frequency).
-    TIM2_ARRL   = LOBYTE(u16);
+    TIM2_ARRH   = HIBYTE(TIM2_ARR_VALUE);      // Set auto-reload value (PWM frequency).
+    TIM2_ARRL   = LOBYTE(TIM2_ARR_VALUE);
     TIM2_CCR1H  = 0;                // Reset CC1 counter.
     TIM2_CCR1L  = 0;
     TIM2_CCMR1  = 0;                // Not using CC1.
@@ -119,4 +118,6 @@ SystemInit(void)
     TIM1_CCER1  = 0;                // Disable CC1 & CC2.
     TIM1_CCER2  = BIT(0);           // Enable CC3. Capture on rising edge. // TODO: Which of edges is better to capture?
     TIM1_CR1   |= 0x01;             // Enable.
+
+    // TODO: Configure ADC.
 }

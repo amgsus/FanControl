@@ -1,7 +1,7 @@
 /*
- * By: A.G.
- * Created: 2020/01/01 03:49
- * Last modified: 2020/01/01 03:49
+ * By:              A.G.
+ * Created:         2020.01.01
+ * Last modified:   2020.01.01
  */
 
 #ifndef STM8_ASM_H

@@ -33,4 +33,6 @@
 #define LOBYTE(word) ((BYTE)((word)))
 #define HIBYTE(word) ((BYTE)((WORD)(word) >> 8U))
 
+#define _MEM_(mem_addr) (*(volatile unsigned char *)(mem_addr))
+
 # endif // ------------------------------------------- End of Include Guard ---

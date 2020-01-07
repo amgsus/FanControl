@@ -1,3 +1,9 @@
+/*
+ * By:              A.G.
+ * Created:         2019.12.31
+ * Last modified:   2020.01.01
+ */
+
 #ifndef GASIFS_VARS_H
 #define GASIFS_VARS_H
 
@@ -9,7 +15,7 @@
 // ---------------------------------- Diagnostic Report Registers 0x00-0x0F ---
 
 /* Num of diagnostic registers (1 <= N <= 16) */
-#define NUM_DIAG    3
+#define NUM_DIAG  3
 
 #define DIAG_BASE_OFFSET 0x00
 #define DIAG_MAX         0x0F
@@ -20,20 +26,30 @@
 
 // ---------------------------------------------- Param Registers 0x10-0xEF ---
 
-/* Num of parameters (1 <= N <= 224) */
-#define NUM_PARM    3
-
-#define PARM_BASE_OFFSET 0x10
 #define PARM_MAX         0xE0
+#define PARM_BASE_OFFSET 0x10
+
+/**
+ * Number of non-volatile parameters (1 <= N <= 224)
+ */
+#define NUM_PARM  8
 
 #define REG_PAR_BUID  ( PARM_BASE_OFFSET + 0x00 ) /* Device BUID */
-#define REG_PAR_DFLT  ( PARM_BASE_OFFSET + 0x01 ) /* Sets duty cycle on device startup */
-#define REG_PAR_FREQ  ( PARM_BASE_OFFSET + 0x02 ) /* PWM frequency (kHz*10) */
+#define REG_PAR_DUTY  ( PARM_BASE_OFFSET + 0x01 ) /* Sets duty cycle on device startup (.1%) */
+#define REG_PAR_FREQ  ( PARM_BASE_OFFSET + 0x02 ) /* PWM frequency (.1kHz) */
+#define REG_PAR_MODE  ( PARM_BASE_OFFSET + 0x03 ) /* Working mode */
+#define REG_PAR_TDIV  ( PARM_BASE_OFFSET + 0x04 ) /* Tachometer pulse divider */
+
+// Reserved for future use:
+
+#define REG_PAR_XXX1  ( PARM_BASE_OFFSET + 0x05 ) /* Reserved */
+#define REG_PAR_XXX2  ( PARM_BASE_OFFSET + 0x06 ) /* Reserved */
+#define REG_PAR_XXX3  ( PARM_BASE_OFFSET + 0x07 ) /* Reserved */
 
 // ------------------------------ Information / Control Registers 0xF0-0xFF ---
 
 /* Num of info registers (1 <= N <= 16) */
-#define NUM_INFO    8
+#define NUM_INFO  5
 
 #define INFO_BASE_OFFSET 0xF0
 #define INFO_MAX         0x0F
@@ -43,9 +59,6 @@
 #define REG_NFO_FLAG  ( INFO_BASE_OFFSET + 0x02 ) /* Flags */
 #define REG_NFO_TICK  ( INFO_BASE_OFFSET + 0x03 ) /* Time keeper (milliseconds) */
 #define REG_NFO_REGS  ( INFO_BASE_OFFSET + 0x04 ) /* Register count: MSB [lonibble=REP, hinibble=NFO]; LSB [PAR]. */
-#define REG_NFO_P0P1  ( INFO_BASE_OFFSET + 0x05 ) /* Snapshot of Port 0 (LSB) & Port 1 (MSB) states */
-#define REG_NFO_P2P3  ( INFO_BASE_OFFSET + 0x06 ) /* Snapshot of Port 2 (LSB) & Port 3 (MSB) states */
-#define REG_NFO_TEMP  ( INFO_BASE_OFFSET + 0x07 ) /* IC Temperature in (Celsium * 10) */
 
 // ----------------------------------------------------------------------------
 
