@@ -136,11 +136,11 @@ ValidateParameterValue(GASIFSREG reg, GASIFSVAL val)
         case REG_PAR_MODE:
             return (1); // TODO: REG_PAR_MODE
         case REG_PAR_TDIV:
-            return (val >= (1) && val <= (4));
+            return (val >= (1));
         case REG_PAR_VSCL:
         case REG_PAR_VOFS:
             return (1);
         default:
-            return (FALSE);
+            return (0);
     }
 }

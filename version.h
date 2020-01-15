@@ -12,6 +12,6 @@
 #define BUS_ID  'N'
 #define HW_TAG  (('F' << 8U) + 'A') /* [F][A]n = 0x4641 */
 
-#define FW_VERSION ((WORD)(0x0001))
+#define FW_VERSION ((WORD)(0x0003))
 
 # endif // ------------------------------------------- End of Include Guard ---

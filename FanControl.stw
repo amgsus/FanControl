@@ -6,3 +6,7 @@ Keyword=ST7Workspace-V0.7
 [Project0]
 Filename=fancontrol.stp
 Dependencies=
+[Options]
+ActiveProject=FanControl
+ActiveConfig=Debug
+AddSortedElements=1

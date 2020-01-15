@@ -1,5 +1,5 @@
 
-Map of Debug\FanControl.sm8 from link file Debug\FanControl.lkf - Tue Jan  7 06:03:58 2020
+Map of Debug\FanControl.sm8 from link file Debug\FanControl.lkf - Wed Jan 15 23:30:46 2020
 
 
                                --------
@@ -7,7 +7,7 @@ Map of Debug\FanControl.sm8 from link file Debug\FanControl.lkf - Tue Jan  7 06:
                                --------
 
 start 00008080 end 00008094 length    20 segment .const
-start 000080bc end 00009328 length  4716 segment .text
+start 000080bc end 00009415 length  4953 segment .text
 start 00004000 end 00004080 length   128 segment .eeprom
 start 00000000 end 0000001a length    26 segment .bsct, initialized
 start 000080a1 end 000080bb length    26 segment .bsct, from
@@ -17,7 +17,7 @@ start 000080bb end 000080bc length     1 segment .bit, from
 start 00000088 end 00000088 length     0 segment .share
 start 00000100 end 00000100 length     0 segment .data
 start 00000100 end 00000100 length     0 segment .bss
-start 00000000 end 000008d9 length  2265 segment .info.
+start 00000000 end 00000937 length  2359 segment .info.
 start 00000000 end 0000e552 length 58706 segment .debug
 start 00008000 end 00008080 length   128 segment .const
 start 00008094 end 000080a1 length    13 segment .init
@@ -51,7 +51,7 @@ start 00001b19 end 0000382d length  7444 section .debug
 start 0000010b end 00000178 length   109 section .info.
 
 Debug\gasifs_hdls.o:
-start 0000848f end 00008679 length   490 section .text
+start 0000848f end 00008672 length   483 section .text
 start 00000000 end 00000005 length     5 section .bsct
 start 00000036 end 00000058 length    34 section .ubsct
 start 0000382d end 0000536c length  6975 section .debug
@@ -60,24 +60,24 @@ start 000087:0 end 000087:2 length     2 section .bit
 start 00008080 end 00008084 length     4 section .const
 
 Debug\gpio.o:
-start 00008679 end 00008786 length   269 section .text
+start 00008672 end 0000877f length   269 section .text
 start 0000536c end 00005e66 length  2810 section .debug
 start 000001ea end 00000255 length   107 section .info.
 
 Debug\hex.o:
-start 00008786 end 000087da length    84 section .text
+start 0000877f end 000087d3 length    84 section .text
 start 00005e66 end 00005f81 length   283 section .debug
 start 00000255 end 000002bf length   106 section .info.
 
 Debug\led.o:
-start 000087da end 0000891c length   322 section .text
+start 000087d3 end 00008915 length   322 section .text
 start 00000058 end 0000005d length     5 section .ubsct
 start 00005f81 end 000079bf length  6718 section .debug
 start 000002bf end 00000329 length   106 section .info.
 start 000087:2 end 000087:3 length     1 section .bit
 
 Debug\main.o:
-start 0000891c end 00008cfb length   991 section .text
+start 00008915 end 00008d2a length  1045 section .text
 start 00000005 end 00000019 length    20 section .bsct
 start 0000005d end 0000007d length    32 section .ubsct
 start 000079bf end 000098e2 length  7971 section .debug
@@ -85,97 +85,105 @@ start 00000329 end 00000394 length   107 section .info.
 start 00008084 end 00008094 length    16 section .const
 
 Debug\params.o:
-start 00008cfb end 00008f09 length   526 section .text
+start 00008d2a end 00008f38 length   526 section .text
 start 00000019 end 0000001a length     1 section .bsct
 start 000098e2 end 0000b450 length  7022 section .debug
 start 00000394 end 00000401 length   109 section .info.
 
 Debug\sysinit.o:
-start 00008f09 end 0000908f length   390 section .text
+start 00008f38 end 000090be length   390 section .text
 start 0000b450 end 0000cc02 length  6066 section .debug
 start 00000401 end 0000046f length   110 section .info.
 
 Debug\utils.o:
-start 0000908f end 000090b4 length    37 section .text
+start 000090be end 000090e3 length    37 section .text
 start 0000cc02 end 0000e40f length  6157 section .debug
 start 0000046f end 000004db length   108 section .info.
 
 (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)bmulx.o:
-start 000090b4 end 000090c2 length    14 section .text
+start 000090e3 end 000090f1 length    14 section .text
 start 000004db end 0000050b length    48 section .info.
 
-(C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)cmulx.o:
-start 000090c2 end 000090d6 length    20 section .text
-start 0000050b end 0000053b length    48 section .info.
-
 (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)eeprom.o:
-start 000090d6 end 0000913c length   102 section .text
-start 0000053b end 0000056c length    49 section .info.
+start 000090f1 end 00009157 length   102 section .text
+start 0000050b end 0000053c length    49 section .info.
 
 (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)itolx.o:
-start 0000913c end 0000914a length    14 section .text
-start 0000056c end 0000059c length    48 section .info.
+start 00009157 end 00009165 length    14 section .text
+start 0000053c end 0000056c length    48 section .info.
 
 (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lcmp.o:
-start 0000914a end 0000916a length    32 section .text
-start 0000059c end 000005cb length    47 section .info.
+start 00009165 end 00009185 length    32 section .text
+start 0000056c end 0000059b length    47 section .info.
 
 (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lgadd.o:
-start 0000916a end 00009181 length    23 section .text
+start 00009185 end 0000919c length    23 section .text
+start 0000059b end 000005cb length    48 section .info.
+
+(C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lgmul.o:
+start 0000919c end 000091a4 length     8 section .text
 start 000005cb end 000005fb length    48 section .info.
 
 (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lgsub.o:
-start 00009181 end 00009198 length    23 section .text
+start 000091a4 end 000091bb length    23 section .text
 start 000005fb end 0000062b length    48 section .info.
+
+(C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lmul.o:
+start 000091bb end 00009246 length   139 section .text
+start 0000062b end 0000065a length    47 section .info.
 
 (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lreg.o:
 start 0000007d end 00000081 length     4 section .ubsct
-start 0000062b end 0000065a length    47 section .info.
-
-(C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ltor.o:
-start 00009198 end 000091aa length    18 section .text
 start 0000065a end 00000689 length    47 section .info.
 
+(C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ltor.o:
+start 00009246 end 00009258 length    18 section .text
+start 00000689 end 000006b8 length    47 section .info.
+
 (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ludiv.o:
-start 000091aa end 000091be length    20 section .text
-start 00000689 end 000006b9 length    48 section .info.
+start 00009258 end 0000926c length    20 section .text
+start 000006b8 end 000006e8 length    48 section .info.
 
 (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ldiv.o:
-start 000091be end 000092a9 length   235 section .text
-start 000006b9 end 000006e8 length    47 section .info.
+start 0000926c end 00009357 length   235 section .text
+start 000006e8 end 00000717 length    47 section .info.
 
 (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lgneg.o:
-start 000092a9 end 000092bc length    19 section .text
-start 000006e8 end 00000718 length    48 section .info.
+start 00009357 end 0000936a length    19 section .text
+start 00000717 end 00000747 length    48 section .info.
 
 (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lneg.o:
-start 000092bc end 000092d1 length    21 section .text
-start 00000718 end 00000747 length    47 section .info.
-
-(C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)rtol.o:
-start 000092d1 end 000092e3 length    18 section .text
+start 0000936a end 0000937f length    21 section .text
 start 00000747 end 00000776 length    47 section .info.
 
+(C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)rtol.o:
+start 0000937f end 00009391 length    18 section .text
+start 00000776 end 000007a5 length    47 section .info.
+
+(C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)smul.o:
+start 00009391 end 000093d0 length    63 section .text
+start 000007a5 end 000007d4 length    47 section .info.
+
 (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)utolx.o:
-start 000092e3 end 000092ea length     7 section .text
-start 00000776 end 000007a6 length    48 section .info.
+start 000093d0 end 000093d7 length     7 section .text
+start 000007d4 end 00000804 length    48 section .info.
 
 (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)umul.o:
-start 000092ea end 00009326 length    60 section .text
-start 000007a6 end 000007d5 length    47 section .info.
+start 000093d7 end 00009413 length    60 section .text
+start 00000804 end 00000833 length    47 section .info.
 
 (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)xreg.o:
 start 00000081 end 00000084 length     3 section .ubsct
-start 000007d5 end 00000804 length    47 section .info.
+start 00000833 end 00000862 length    47 section .info.
 
 (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)yreg.o:
 start 00000084 end 00000087 length     3 section .ubsct
-start 00000804 end 00000833 length    47 section .info.
+start 00000862 end 00000891 length    47 section .info.
 
 Debug\intvect.o:
-start 00009326 end 00009328 length     2 section .text
+start 00009413 end 00009415 length     2 section .text
 start 0000e40f end 0000e552 length   323 section .debug
-start 00000833 end 000008a1 length   110 section .info.
+start 00000891 end 000008ff length   110 section .info.
 start 00008000 end 00008080 length   128 section .const
 
 
@@ -232,7 +240,7 @@ L1341_CheckGasifsKey                        34   (2)
 L1441_CalculateDCINVoltage                  20   (6)
 L3241_ReadTachoCaptureSafe                   4   (4)
 L3341_CheckGasifsResetRequest                2   (2)
-L5241_CalculateRPM                          22   (8)
+L5241_CalculateRPM                          24   (10)
 L5341_IncrementGasifsCounter                 4   (2)
 L7241_CheckGasifsParametersUpdateEvent      47   (6)
 L7341_ADCTask                               22   (8)
@@ -292,7 +300,7 @@ Stack size: 85
           | 
   19      + L1441_CalculateDCINVoltage: (6)
   20      + L3341_CheckGasifsResetRequest: (2)
-  21      + L5241_CalculateRPM: (8)
+  21      + L5241_CalculateRPM: (10)
   22      |    + L3241_ReadTachoCaptureSafe: (4)
           | 
   23      + L5341_IncrementGasifsCounter: (2)
@@ -488,7 +496,7 @@ _AWU_APR                   000050f1   defined in Debug\eeprom.o
 _AWU_CSR1                  000050f0   defined in Debug\eeprom.o
 _AWU_TBR                   000050f2   defined in Debug\eeprom.o
 _BEEP_CSR                  000050f3   defined in Debug\eeprom.o
-_BlankCheck                0000908f   defined in Debug\utils.o section .text
+_BlankCheck                000090be   defined in Debug\utils.o section .text
                                       used in Debug\params.o
 _CFG_GCR                   00007f60   defined in Debug\eeprom.o
 _CLK_CANCCR                000050cb   defined in Debug\eeprom.o
@@ -533,13 +541,13 @@ _FLASH_NCR2                0000505c   defined in Debug\eeprom.o
                                       used in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)eeprom.o
 _FLASH_NFPR                0000505e   defined in Debug\eeprom.o
 _FLASH_PUKR                00005062   defined in Debug\eeprom.o
-_GPIO_Read                 000086f1   defined in Debug\gpio.o section .text
-_GPIO_SetAllHighZ          00008741   defined in Debug\gpio.o section .text
-_GPIO_Setup                00008679   defined in Debug\gpio.o section .text
+_GPIO_Read                 000086ea   defined in Debug\gpio.o section .text
+_GPIO_SetAllHighZ          0000873a   defined in Debug\gpio.o section .text
+_GPIO_Setup                00008672   defined in Debug\gpio.o section .text
                                       used in Debug\sysinit.o
-_GPIO_Toggle               00008725   defined in Debug\gpio.o section .text
+_GPIO_Toggle               0000871e   defined in Debug\gpio.o section .text
                                       used in Debug\main.o
-_GPIO_Write                00008707   defined in Debug\gpio.o section .text
+_GPIO_Write                00008700   defined in Debug\gpio.o section .text
                                       used in Debug\led.o Debug\main.o
 _GasifsAcknoledge          0000839a   defined in Debug\gasifs.o section .text
                                       used in Debug\gasifs_hdls.o
@@ -558,7 +566,7 @@ _GasifsRREG                000084f6   defined in Debug\gasifs_hdls.o section .te
 _GasifsReset               000081b5   defined in Debug\gasifs.o section .text
 _GasifsWREG                00008560   defined in Debug\gasifs_hdls.o section .text
                                       used in Debug\gasifs.o
-_GetDeviceBUID             00008a5b   defined in Debug\main.o section .text
+_GetDeviceBUID             00008a54   defined in Debug\main.o section .text
                                       used in Debug\gasifs.o
 _I2C_CCRH                  0000521c   defined in Debug\eeprom.o
 _I2C_CCRL                  0000521b   defined in Debug\eeprom.o
@@ -585,17 +593,17 @@ _ITC_SPR8                  00007f77   defined in Debug\eeprom.o
 _IWDG_KR                   000050e0   defined in Debug\eeprom.o
 _IWDG_PR                   000050e1   defined in Debug\eeprom.o
 _IWDG_RLR                  000050e2   defined in Debug\eeprom.o
-_LED_Init                  000087da   defined in Debug\led.o section .text
+_LED_Init                  000087d3   defined in Debug\led.o section .text
                                       used in Debug\main.o
-_LED_SetFallbackState      000087ea   defined in Debug\led.o section .text
+_LED_SetFallbackState      000087e3   defined in Debug\led.o section .text
                                       used in Debug\main.o
-_LED_SetState              000087ed   defined in Debug\led.o section .text
+_LED_SetState              000087e6   defined in Debug\led.o section .text
                                       used in Debug\main.o
-_LED_Task                  00008805   defined in Debug\led.o section .text
+_LED_Task                  000087fe   defined in Debug\led.o section .text
                                       used in Debug\main.o
-_LoadDefaultParameters     00008d11   defined in Debug\params.o section .text
+_LoadDefaultParameters     00008d40   defined in Debug\params.o section .text
                                       used in Debug\main.o
-_LoadParameters            00008d34   defined in Debug\params.o section .text
+_LoadParameters            00008d63   defined in Debug\params.o section .text
                                       used in Debug\main.o
 _PA_CR1                    00005003   defined in Debug\eeprom.o
 _PA_CR2                    00005004   defined in Debug\eeprom.o
@@ -627,7 +635,7 @@ _PF_CR2                    0000501d   defined in Debug\eeprom.o
 _PF_DDR                    0000501b   defined in Debug\eeprom.o
 _PF_IDR                    0000501a   defined in Debug\eeprom.o
 _PF_ODR                    00005019   defined in Debug\eeprom.o
-_RS485_ToggleTransmitter   00008a5e   defined in Debug\main.o section .text
+_RS485_ToggleTransmitter   00008a57   defined in Debug\main.o section .text
                                       used in Debug\gasifs.o
 _RST_SR                    000050b3   defined in Debug\eeprom.o
 _SPI_CR1                   00005200   defined in Debug\eeprom.o
@@ -639,15 +647,15 @@ _SPI_RXCRCR                00005206   defined in Debug\eeprom.o
 _SPI_SR                    00005203   defined in Debug\eeprom.o
 _SPI_TXCRCR                00005207   defined in Debug\eeprom.o
 _SWIM_CSR                  00007f80   defined in Debug\eeprom.o
-_SaveParameters            00008d7b   defined in Debug\params.o section .text
+_SaveParameters            00008daa   defined in Debug\params.o section .text
                                       used in Debug\main.o
-_SetDutyCycle              00008b07   defined in Debug\main.o section .text
-_SetInfoRegisters          00008cfb   defined in Debug\params.o section .text
+_SetDutyCycle              00008b00   defined in Debug\main.o section .text
+_SetInfoRegisters          00008d2a   defined in Debug\params.o section .text
                                       used in Debug\main.o
-_SetTask                   000089dd   defined in Debug\main.o section .text
+_SetTask                   000089d6   defined in Debug\main.o section .text
                                       used in Debug\gasifs_hdls.o
-_SetupPWM                  00008a74   defined in Debug\main.o section .text
-_SystemInit                00008f09   defined in Debug\sysinit.o section .text
+_SetupPWM                  00008a6d   defined in Debug\main.o section .text
+_SystemInit                00008f38   defined in Debug\sysinit.o section .text
                                       used in Debug\main.o
 _TIM1_ARRH                 00005262   defined in Debug\eeprom.o
 _TIM1_ARRL                 00005263   defined in Debug\eeprom.o
@@ -740,7 +748,7 @@ __startmem                 00000100   defined in command file section .bss
 __stext                    000080bc   defined in C:\Program Files (x86)\Cosmic\CXSTM8\lib\crtsi0.sm8 section .text
                                       used in Debug\intvect.o
 __vectab                   00008000   defined in Debug\intvect.o section .const
-_d2x                       00008786   defined in Debug\hex.o section .text
+_d2x                       0000877f   defined in Debug\hex.o section .text
                                       used in Debug\gasifs.o
 _exit                      0000810a   defined in C:\Program Files (x86)\Cosmic\CXSTM8\lib\crtsi0.sm8 section .text
 _g_EEPROMStorage           00004000   defined in Debug\eeprom.o section .eeprom
@@ -755,69 +763,78 @@ _g_ParamsUpdateEvent       000087:0   defined in Debug\gasifs_hdls.o section .bi
                                       used in Debug\main.o
 _g_ResetRequested          000087:1   defined in Debug\gasifs_hdls.o section .bit, initialized
                                       used in Debug\main.o
-_main                      0000891c   defined in Debug\main.o section .text
+_main                      00008915   defined in Debug\main.o section .text
                                       used in C:\Program Files (x86)\Cosmic\CXSTM8\lib\crtsi0.sm8
-_x2d                       000087a1   defined in Debug\hex.o section .text
+_x2d                       0000879a   defined in Debug\hex.o section .text
                                       used in Debug\gasifs.o
-c_bmulx                    000090b4   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)bmulx.o section .text
+c_bmulx                    000090e3   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)bmulx.o section .text
                                       used in Debug\main.o
-c_cmulx                    000090c2   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)cmulx.o section .text
-                                      used in Debug\main.o
-c_divsl                    000091be   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ldiv.o section .text
+c_divsl                    0000926c   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ldiv.o section .text
                                       *** not used ***
-c_divul                    000091d5   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ldiv.o section .text
+c_divul                    00009283   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ldiv.o section .text
                                       used in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ludiv.o
-c_eewrc                    000090ec   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)eeprom.o section .text
+c_eewrc                    00009107   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)eeprom.o section .text
                                       used in Debug\params.o
-c_eewrd                    0000911f   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)eeprom.o section .text
+c_eewrd                    0000913a   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)eeprom.o section .text
                                       *** not used ***
-c_eewrw                    000090d6   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)eeprom.o section .text
+c_eewrw                    000090f1   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)eeprom.o section .text
                                       used in Debug\params.o
-c_itolx                    0000913c   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)itolx.o section .text
+c_itolx                    00009157   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)itolx.o section .text
                                       used in Debug\main.o
-c_lcmp                     0000914a   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lcmp.o section .text
+c_lcmp                     00009165   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lcmp.o section .text
                                       used in Debug\gasifs_hdls.o Debug\main.o
-c_lgadd                    0000916a   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lgadd.o section .text
+c_lgadd                    00009185   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lgadd.o section .text
                                       used in Debug\main.o
-c_lgneg                    000092a9   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lgneg.o section .text
+c_lgmul                    0000919c   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lgmul.o section .text
+                                      used in Debug\main.o
+c_lgneg                    00009357   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lgneg.o section .text
                                       used in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ldiv.o
-c_lgsub                    00009181   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lgsub.o section .text
+c_lgsub                    000091a4   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lgsub.o section .text
                                       used in Debug\main.o
-c_lneg                     000092bc   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lneg.o section .text
+c_lmul                     000091bb   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lmul.o section .text
+                                      used in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lgmul.o
+c_lmulc                    000091c3   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lmul.o section .text
+                                      *** not used ***
+c_lneg                     0000936a   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lneg.o section .text
                                       used in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ldiv.o
 c_lreg                     0000007d   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lreg.o section .ubsct
                                       used in Debug\main.o
-                                              (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)cmulx.o
                                               (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)eeprom.o
                                               (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)itolx.o
                                               (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lcmp.o
                                               (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lgadd.o
                                               (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lgsub.o
+                                              (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lmul.o
                                               (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ltor.o
                                               (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ldiv.o
                                               (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lneg.o
                                               (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)rtol.o
+                                              (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)smul.o
                                               (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)utolx.o
                                               (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)umul.o
-c_ltor                     00009198   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ltor.o section .text
+c_ltor                     00009246   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ltor.o section .text
                                       used in Debug\main.o
-c_ludv                     000091aa   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ludiv.o section .text
+c_ludv                     00009258   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ludiv.o section .text
                                       used in Debug\main.o
-c_rtol                     000092d1   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)rtol.o section .text
+c_rtol                     0000937f   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)rtol.o section .text
                                       used in Debug\main.o
-c_uitolx                   000092e3   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)utolx.o section .text
+                                              (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lgmul.o
+c_smul                     00009391   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)smul.o section .text
+                                      used in Debug\main.o
+c_uitolx                   000093d0   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)utolx.o section .text
                                       used in Debug\gasifs_hdls.o Debug\main.o
-c_umul                     000092ea   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)umul.o section .text
+c_umul                     000093d7   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)umul.o section .text
                                       used in Debug\main.o
 c_x                        00000081   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)xreg.o section .ubsct
                                       used in C:\Program Files (x86)\Cosmic\CXSTM8\lib\crtsi0.sm8
                                               Debug\main.o
                                               (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)bmulx.o
+                                              (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)lmul.o
                                               (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)ldiv.o
                                               (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)umul.o
 c_y                        00000084   defined in (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)yreg.o section .ubsct
                                       used in C:\Program Files (x86)\Cosmic\CXSTM8\lib\crtsi0.sm8
                                               (C:\Program Files (x86)\Cosmic\CXSTM8\lib\libm0.sm8)umul.o
-f_NonHandledInterrupt      00009326   defined in Debug\intvect.o section .text
-f_TIM1_CAPCOM_IRQHandler   00008b45   defined in Debug\main.o section .text
+f_NonHandledInterrupt      00009413   defined in Debug\intvect.o section .text
+f_TIM1_CAPCOM_IRQHandler   00008b3e   defined in Debug\main.o section .text
                                       used in Debug\intvect.o

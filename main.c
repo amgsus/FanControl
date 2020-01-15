@@ -310,10 +310,10 @@ PRIVATE
 void
 CalculateRPM(void)
 {
-    WORD n;
+    UINT32 n;
     UINT32 accum;
     n = ReadTachoCaptureSafe();
-    accum = n * 50UL;
+    accum = n * 50UL; // 50 us resolution.
     accum /= 100; // .1 ms
     SET_GASIFSVAR_DIAG(REG_REP_PER, (GASIFSOLD) accum);
     n = 10000U / (WORD) accum;
